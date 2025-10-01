@@ -1,0 +1,14 @@
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to sensitive files
+<Files ~ "\.(env|log|sql)$">
+    Deny from all
+</Files>
+
+# Redirect to install if database not set up
+RewriteCond %{REQUEST_URI} !^/install\.php$
+RewriteCond %{REQUEST_URI} !^/common/
+RewriteCond %{REQUEST_URI} !^/admin/
+RewriteCond %{DOCUMENT_ROOT}/install.php -f
+RewriteRule ^(.*)$ /install.php [L]
